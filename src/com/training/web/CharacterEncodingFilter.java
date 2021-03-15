@@ -14,12 +14,12 @@ import javax.servlet.annotation.WebFilter;
 public class CharacterEncodingFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
 		
-		arg0.setCharacterEncoding("UTF-8");
-		arg2.doFilter(arg0, arg1);
+		request.setCharacterEncoding("UTF-8");
+		chain.doFilter(request, response);
 	}
 
 }

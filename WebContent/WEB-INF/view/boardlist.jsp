@@ -27,7 +27,7 @@
 <header>
 		<div class="content-container" style="align:center">
 			<h1 id="logo">
-				<a href="/index.html"> <img src="/images/logo.png" alt="뉴렉처 온라인" />
+				<a href="/index.html"> <img src="/images/logo.png" alt="오징어 오니기리의 페이지" />
 
 				</a>
 			</h1>
@@ -38,10 +38,10 @@
 				<nav id="main-menu" style="	display: inline-block;	">
 					<h1>메인메뉴</h1>
 					<ul>
-						<li><a href="/guide">학습가이드</a></li>
+						<li><a href="/guide">사야랑나랑추억</a></li>
 
-						<li><a href="/course">강좌선택</a></li>
-						<li><a href="/answeris/index">AnswerIs</a></li>
+						<li><a href="/course">하고싶은말</a></li>
+						<li><a href="/answeris/index">그림그린거올리기</a></li>
 					</ul>
 				</nav>
 
@@ -56,7 +56,7 @@
 		<div class="content-container clearfix">
 			<aside class="aside" style="float:left">
 				<nav class="menu text-menu first margin-top">
-					<h1>고객센터메뉴</h1>
+					<h1>고객센터</h1>
 					<ul>
 						<li><a class="current" href="/customer/notice">공지사항</a></li>
 						<li><a class="" href="/customer/faq">자유게시판</a></li>
@@ -134,7 +134,8 @@
 								<a href="?p=${startNum+5}&t=&q=">Next</a>
 							</c:if> <c:if test="${startNum+4>=lastNum}">
 								<span aria-hidden="true" onclick="alert('다음 페이지가 없습니다.');">Next</span>
-							</c:if></li>
+							</c:if>
+						</li>
 					</ul>
 				</nav>
 				<div>

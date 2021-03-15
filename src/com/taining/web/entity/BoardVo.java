@@ -1,6 +1,7 @@
 package com.taining.web.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import lombok.Data;
 
@@ -13,10 +14,13 @@ public class BoardVo {
 	private Date regdate;
 	private int hit;
 	private String files;
+	private boolean pub;
+	
 	public BoardVo() {
 	}
-	public BoardVo(int id, String title, String writer, String content, Date regdate, int hit, String files) {
-		super();
+	
+	public BoardVo(int id, String title, String writer, String content, Date regdate, int hit, String files,
+			boolean pub) {
 		this.id = id;
 		this.title = title;
 		this.writer = writer;
@@ -24,6 +28,11 @@ public class BoardVo {
 		this.regdate = regdate;
 		this.hit = hit;
 		this.files = files;
+		this.pub = pub;
+	}
+	
+	public Boolean getPub() {
+		return this.pub;
 	}
 
 	

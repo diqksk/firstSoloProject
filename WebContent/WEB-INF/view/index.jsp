@@ -4,14 +4,24 @@
 <html>
 
 <head>
-    <title>코딩 전문가를 만들기 위한 온라인 강의 시스템</title>
+    <title>누구나 소통할수 있는 익명게시판</title>
     <meta charset="UTF-8">
     <title>공지사항목록</title>
 
     <link href="/css/layout.css" type="text/css" rel="stylesheet" />
     <link href="/css/index.css" type="text/css" rel="stylesheet" />
 </head>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
+<!-- 부가적인 테마 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
     <!-- header 부분 -->
 

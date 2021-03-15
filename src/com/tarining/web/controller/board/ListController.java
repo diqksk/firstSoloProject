@@ -32,7 +32,7 @@ public class ListController extends HttpServlet {
 		if(page_!=null && !page_.equals("")) page=Integer.parseInt(page_);
 		
 		BoardService service = new BoardService();
-		List<BoardView> list = service.getBoardList(field,query,page);
+		List<BoardView> list = service.getBoardPubList(field,query,page);
 		int count = service.getBoardCount(field,query);
 		
 		request.setAttribute("list", list);
