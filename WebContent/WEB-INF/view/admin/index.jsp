@@ -19,114 +19,27 @@
 </style>
 </head>
 <body>
-	<!-- header 부분 -->
-	
-
-
-
-
-    <header id="header">
-        
-        <div class="content-container">
-            <!-- ---------------------------<header>--------------------------------------- -->
-
-            <h1 id="logo">
-                <a href="/index.html">
-                    <img src="/images/logo.png" alt="뉴렉처 온라인" />
-
-                </a>
-            </h1>
-
-            <section>
-                <h1 class="hidden">헤더</h1>
-
-                <nav id="main-menu">
-                    <h1>메인메뉴</h1>
-                    <ul>
-                        <li><a href="/guide">학습가이드</a></li>
-                        <li><a href="/course">강좌선택</a></li>
-                        <li><a href="/answeris/index">AnswerIs</a></li>
-                    </ul>
-                </nav>
-
-                <div class="sub-menu">
-
-                    <section id="search-form">
-                        <h1>강좌검색 폼</h1>
-                        <form action="/course">
-                            <fieldset>
-                                <legend>과정검색필드</legend>
-                                <label>과정검색</label>
-                                <input type="text" name="q" value="" />
-                                <input type="submit" value="검색" />
-                            </fieldset>
-                        </form>
-                    </section>
-
-                    <nav id="acount-menu">
-                        <h1 class="hidden">회원메뉴</h1>
-                        <ul>
-                            <li><a href="/index.html">HOME</a></li>
-                            <li><a href="/member/login.html">로그인</a></li>
-                            <li><a href="/member/agree.html">회원가입</a></li>
-                        </ul>
-                    </nav>
-
-                    <nav id="member-menu" class="linear-layout">
-                        <h1 class="hidden">고객메뉴</h1>
-                        <ul class="linear-layout">
-                            <li><a href="/member/home"><img src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
-                            <li><a href="/notice/list.html"><img src="/images/txt-customer.png" alt="고객센터" /></a></li>
-                        </ul>
-                    </nav>
-
-                </div>
-            </section>
-
-        </div>
-        
-    </header>
-
-	<!-- --------------------------- <visual> --------------------------------------- -->
-	<!-- visual 부분 -->
-	
-	<div id="visual">
-		<div class="content-container"></div>
-	</div>
-	<!-- --------------------------- <body> --------------------------------------- -->
-	<div id="body">
-		<div class="content-container clearfix">
-
-			<!-- --------------------------- aside --------------------------------------- -->
-			<!-- aside 부분 -->
-			
-
-
-			<aside class="aside">
-				<h1>ADMIN PAGE</h1>
-
-				<nav class="menu text-menu first margin-top">
-					<h1>마이페이지</h1>
-					<ul>
-						<li><a href="/admin/index.html">관리자홈</a></li>						
-						<li><a href="/teacher/index.html">선생님페이지</a></li>
-						<li><a href="/student/index.html">수강생페이지</a></li>
-					</ul>
-				</nav>
-				
-				<nav class="menu text-menu">
-					<h1>알림관리</h1>
-					<ul>						
-						<li><a href="/admin/board/notice/list.html">공지사항</a></li>				
-					</ul>
-				</nav>
-								
+<header style="background-image:url(/img/이카오니기리배경.jpg); cursor: pointer; " onclick="location.href='list'">
+		<div style="text-align:center; height:200px; padding:60px 0 0 0;">
+		</div>
+	</header>
+	<!-------------------------------------------aside----------------------------------------------->
+			<aside class="aside" style="float:left; padding:10px; margin:20px 0 0 0">
+				<div style="width:200px">
+					<nav class="menu text-menu first margin-top">
+						<h1 style="margin:0 0 0 65px;">목록</h1>
+						<br /><br /><br />
+						<ul>
+							<li><a href="/board/list">추억</a></li>
+							<li><a href="/gallery/list">그림게시판</a></li>
+							<li><a href="/admin/login">관리자로그인</a></li>
+						</ul>
+					</nav>
+				</div>
 			</aside>
 			<!-- --------------------------- main --------------------------------------- -->
-			
-			<!-- content 부분 -->
-			
-	<main class="main">
+		<main style="float:left; padding:10px; margin:20px 0 0 0">
+		</main>
 		<h2 class="main title">관리자홈</h2>
 		
 		<div class="breadcrumb">
@@ -143,9 +56,6 @@
 		</div>
 		
 	</main>
-			
-		</div>
-	</div>
 	<!-- ------------------- <footer> --------------------------------------- -->
 	
 

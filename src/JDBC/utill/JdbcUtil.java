@@ -15,9 +15,6 @@ public class JdbcUtil {
 			
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				System.out.println("드라이버 검색 성공!");
-				DriverManager.getConnection(url,id,pass);
-				System.out.println("로그인 성공!");
 				return DriverManager.getConnection(url,id,pass);
 				
 			} catch (ClassNotFoundException e) {

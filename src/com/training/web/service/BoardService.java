@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +21,6 @@ public class BoardService {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-	
-	public int removeBoardAll(int[] ids){
-		
-		return 0;
-	}
 	
 	public int pubBoardAll(int[] oids,int[] cids) {
 		
@@ -73,7 +70,7 @@ public class BoardService {
 		
 		int result=0;
 		
-		String sql = "INSERT INTO BOARD(TITLE,CONTENT,WRITER,PUB,FILES) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO BOARD(TITLE,CONTENT,WRITER,PUB,FILES,PASSWORD) VALUES(?,?,?,?,?,?)";
 		
 		try {
 			conn = JdbcUtil.getConnection();
@@ -83,6 +80,7 @@ public class BoardService {
 			pstmt.setString(3, vo.getWriter());
 			pstmt.setBoolean(4, vo.getPub());
 			pstmt.setString(5, vo.getFiles());
+			pstmt.setString(6,vo.getPassword());
 			
 			result=pstmt.executeUpdate();
 			pstmt.close();
@@ -95,14 +93,77 @@ public class BoardService {
 		return result;
 	}
 	
-	public int deleteBoard(int id) {
+	public boolean checkPassword(int id, String pwd) {
 		
-		return 0;
+		String sql = "SELECT * FROM BOARD WHERE ID=? ";
+		
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("password").equals(pwd)) {
+					return true;
+				}
+			}else {
+				System.out.println("id가 없습니다.");
+				return false;
+			}
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("여기로 들어온다면 값이없는것");
+		return false;
 	}
 	
-	public int updateBoard(BoardVo vo) {
+	public void deleteBoard(int id) {
 		
-		return 0;
+		
+		String sql = "DELETE FROM BOARD WHERE ID=? ";
+		
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,id);
+			pstmt.executeUpdate();
+			if(pstmt.executeUpdate()<=0) {
+				System.out.println("삭제성공");
+			}else {
+				System.out.println("삭제실패");
+			}
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateBoard(BoardVo vo) {
+		
+		String sql = "UPDATE BOARD SET TITLE=?, WRITER=?, CONTENT=? WHERE ID=?";
+		
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,vo.getTitle());
+			pstmt.setString(2,vo.getWriter());
+			pstmt.setString(3,vo.getContent());
+			pstmt.setInt(4,	vo.getId());
+			pstmt.executeUpdate();
+			if(pstmt.executeUpdate()<=0) {
+				System.out.println("삭제성공");
+			}else {
+				System.out.println("삭제실패");
+			}
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public List<BoardVo> getBoardNewList(){
@@ -142,8 +203,9 @@ public class BoardService {
 				String files = rs.getString("files");
 				int cmtCount = rs.getInt("CMT_COUNT");
 				boolean pub = rs.getBoolean("PUB");
+				String password = rs.getString("PASSWORD");
 				
-				BoardView vo = new BoardView(id, title, writer, content, regdate, hit, files,pub,cmtCount);
+				BoardView vo = new BoardView(id, title, writer, content, regdate, hit, files,pub,password,cmtCount);
 				System.out.println(vo);
 				list.add(vo);
 			}
@@ -175,13 +237,14 @@ public class BoardService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
+				System.out.printf("id>>"+id+"  제목>>"+title+" 날짜>>>"+regdate+"\n");
 				int hit = rs.getInt("HIT");
 				String files = rs.getString("files");
 				int cmtCount = rs.getInt("CMT_COUNT");
 				boolean pub = rs.getBoolean("PUB");
+				String password = rs.getString("PASSWORD");
 				
-				BoardView vo = new BoardView(id, title, writer, content, regdate, hit, files,pub,cmtCount);
-				System.out.println(vo);
+				BoardView vo = new BoardView(id, title, writer, content, regdate, hit, files,pub,password,cmtCount);
 				list.add(vo);
 			}
 
@@ -220,6 +283,29 @@ public class BoardService {
 
 		return count;
 	}
+	
+	public int getPubBoardCount(String field, String query) {
+		int count = 0;
+		String sql = "SELECT COUNT(ID) COUNT FROM (SELECT @ROWNUM := @ROWNUM + 1 AS NUM, B.* FROM BOARD B,(SELECT @ROWNUM:=0) TMP WHERE "+ field +" LIKE ? AND PUB=1 ORDER BY REGDATE DESC) C ;";
+		
+		
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + query + "%");
+			rs = pstmt.executeQuery();
+			
+			if (rs.next())
+				count = rs.getInt("COUNT");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs, pstmt, conn);
+		}
+		
+		return count;
+	}
 	public BoardVo getBoard(int id) {
 		BoardVo vo = null;
 		String sql = "SELECT * FROM BOARD WHERE ID=?";
@@ -235,12 +321,13 @@ public class BoardService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
-				int hit = rs.getInt("HIT");
+				int hit_ = rs.getInt("HIT");
 				String files = rs.getString("files");
 				boolean pub = rs.getBoolean("PUB");
+				String password = rs.getString("PASSWORD");
+				int hit=countHit(hit_,bid);
 				
-				vo = new BoardVo(bid, title, writer, content, regdate, hit, files, pub);
-				System.out.println(vo);
+				vo = new BoardVo(bid, title, writer, content, regdate, hit, files,password,pub);
 			}
 			
 		} catch (SQLException e) {
@@ -271,9 +358,9 @@ public class BoardService {
 					int hit = rs.getInt("HIT");
 					String files = rs.getString("files");
 					boolean pub = rs.getBoolean("PUB");
+					String password = rs.getString("PASSWORD");
 					
-					vo = new BoardVo(bid, title, writer, content, regdate, hit, files, pub);
-					System.out.println(vo);
+					vo = new BoardVo(bid, title, writer, content, regdate, hit, files,password,pub);
 					break;
 				}
 			}
@@ -305,9 +392,9 @@ public class BoardService {
 				int hit = rs.getInt("HIT");
 				String files = rs.getString("files");
 				boolean pub = rs.getBoolean("PUB");
+String password = rs.getString("PASSWORD");
 				
-				vo = new BoardVo(bid, title, writer, content, regdate, hit, files, pub);
-				System.out.println(vo);
+				vo = new BoardVo(bid, title, writer, content, regdate, hit, files,password,pub);
 				break;
 				}
 			}
@@ -340,9 +427,9 @@ public class BoardService {
 				int hit = rs.getInt("HIT");
 				String files = rs.getString("files");
 				boolean pub = rs.getBoolean("PUB");
+				String password = rs.getString("PASSWORD");
 				
-				vo = new BoardVo(bid, title, writer, content, regdate, hit, files, pub);
-				System.out.println(vo);
+				vo = new BoardVo(bid, title, writer, content, regdate, hit, files,password,pub);
 			}
 			
 		} catch (SQLException e) {
@@ -371,9 +458,9 @@ public class BoardService {
 					int hit = rs.getInt("HIT");
 					String files = rs.getString("files");
 					boolean pub = rs.getBoolean("PUB");
+					String password = rs.getString("PASSWORD");
 					
-					vo = new BoardVo(bid, title, writer, content, regdate, hit, files, pub);
-					System.out.println(vo);
+					vo = new BoardVo(bid, title, writer, content, regdate, hit, files,password,pub);
 					break;
 				}
 			
@@ -412,6 +499,21 @@ public class BoardService {
 		
 		return result;
 	}
-
+	public int countHit (int hit, int id) {
+		int addhit = hit+1;
+		System.out.println("조회전 hit: "+hit+" 조회후 : "+addhit);
+		String SQL ="UPDATE BOARD SET HIT = ? WHERE ID = ?";
+		
+		try {
+			conn=JdbcUtil.getConnection();
+			pstmt= conn.prepareStatement(SQL);
+			pstmt.setInt(1, addhit);
+			pstmt.setInt(2, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return addhit;
+	}
 
 }

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>IKA and ONIGIRI</title>
 </head>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
@@ -21,78 +21,95 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
+ul{
+list-style:none;
+}
+.data:hover>td{
+	background:#eee;
+	cusor:pointer;
+}
+a:link{
+	color:black;
+}
+a:visited{
+	color:black;
+}
 </style>
-<body>
-	<!-------------------------------------------header----------------------------------------------->
-<header>
-		<div class="content-container" style="align:center">
-			<h1 id="logo">
-				<a href="/index.html"> <img src="/images/logo.png" alt="오징어 오니기리의 페이지" />
-
-				</a>
-			</h1>
-
-			<section>
-				<h1 class="hidden">헤더</h1>
-
-				<nav id="main-menu" style="	display: inline-block;	">
-					<h1>메인메뉴</h1>
-					<ul>
-						<li><a href="/guide">사야랑나랑추억</a></li>
-
-						<li><a href="/course">하고싶은말</a></li>
-						<li><a href="/answeris/index">그림그린거올리기</a></li>
-					</ul>
-				</nav>
-
-			</section>
-
+<body style="min-width: 1640px;">
+<header style="background-image:url(/img/이카오니기리배경.jpg); cursor: pointer; " onclick="location.href='list'">
+		<div style="text-align:center; height:200px; padding:60px 0 0 0;">
 		</div>
-
 	</header>
 
 	<!-------------------------------------------aside----------------------------------------------->
-	<div id="body">
-		<div class="content-container clearfix">
-			<aside class="aside" style="float:left">
-				<nav class="menu text-menu first margin-top">
-					<h1>고객센터</h1>
+			<aside class="aside" style="float:left; padding:10px 0 10px 10px; margin:20px 0 0 0">
+				<div style="width:200px">
+		<nav>
+				<br />
+				<br />
+				<c:if test="${login_id!= null }">
+					<form action="/admin/login" method="POST">
+					<span style="margin-left:30px;">'${login_id }'님 안녕하세요.</span><br />
+					<span style="margin-left:30px;">관리자 계정입니다.</span>
+					<span style="margin-left:30px;">
+						<input type="hidden" name="access" value="logout" />
+						<input type="submit" value="log out" style="border:0"/>
+					</span>
+					</form>
+				</c:if>
 					<ul>
-						<li><a class="current" href="/customer/notice">공지사항</a></li>
-						<li><a class="" href="/customer/faq">자유게시판</a></li>
-						<li><a class="" href="/customer/question">자유게시판2</a></li>
-						<li><a class="" href="/customer/event">이벤트</a></li>
-
-					</ul>
-				</nav>
-
-
-
+					<li><p style="font-size: 20px; margin-top: 30px;">
+							<a href="/board/list">추억</a>
+						</p></li>
+					<li><p style="font-size: 20px; margin-top: 30px;">
+							<a href="/gallery/list">그림게시판</a>
+						</p></li>
+					<c:if test="${login_id== null }">
+						<li>
+							<p style="font-size: 20px; margin-top: 30px;">
+								<a href="/admin/login">관리자로그인</a>
+							</p>
+						</li>
+					</c:if>
+					<c:if test="${login_id != null }">
+					<li>
+						<p style="font-size: 20px; margin-top: 30px;">
+							<a href="/admin/board/list">관리자 게시판</a>
+						</p>
+					</li>
+					</c:if>
+				</ul>
+			</nav>
+				</div>
 			</aside>
-			<!-------------------------------------------main----------------------------------------------->
+			<!-- --------------------------- main --------------------------------------- -->
 
-
-			<main class="main" style="float:left">
+		
+		<main style="float:left; padding:10px 10px 10px 0; margin:20px 0 0 0" >
+			<div style="padding:40px; margin:20px; border:1px solid #eee">
 				<div>
 					<table class="table">
 						<thead>
 							<tr>
-								<th style="width: 60px;">번호</th>
-								<th style="width: 800px;">제목</th>
-								<th style="width: 100px;">작성자</th>
-								<th style="width: 100px;">작성일</th>
-								<th style="width: 60px;">조회수</th>
+								<th style="width: 60px; text-align:center;">번호</th>
+								<th style="width: 900px; text-align:center;">제목</th>
+								<th style="width: 130px; text-align:center;">작성자</th>
+								<th style="width: 100px; text-align:center;">작성일</th>
+								<th style="width: 60px; text-align:center;">조회수</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="n" items="${list}">
-								<tr>
+								<tr class="data">
 									<td>${n.id }</td>
-									<td class="title indent text-align-left"><a
-										href="detail?id=${n.id }">${n.title }</a><span style="color:orange">[${n.cmtCount }]</span></td>
+									<td>
+										<a href="detail?id=${n.id }&p=${(empty param.p)?1:param.p}">${n.title }</a>
+										<span style="color:#FF5656">[${n.cmtCount }]</span>
+									</td>
 									<td>${n.writer }</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${n.regdate }" /></td>
+									<td>
+										<fmt:formatDate pattern="yyyy-MM-dd" value="${n.regdate }" />
+									</td>
 									<td>${n.hit }</td>
 								</tr>
 							</c:forEach>
@@ -102,19 +119,19 @@
 
 				<c:set var="page" value="${(empty param.p)?1:param.p}" />
 				<c:set var="startNum" value="${page-(page-1)%5}" />
-				<c:set var="lastNum"
-					value="${fn:substringBefore(Math.ceil(count/10),'.')}" />
+				<c:set var="lastNum" value="${fn:substringBefore(Math.ceil(count/10),'.')}" />
 
 
-				<div style="float:right">
-					<h3 class="hidden">현재 페이지</h3>
-					<div>
+				<div style="float:right; padding:0 15px 0 0;"><!--현재 페이지 -->
 						<span style="color:orange">${(empty param.p)?1:param.p }</span>
 						/ ${lastNum } pages
-					</div>
+				</div>
+				
+				<div>
+				<a href="reg" style="color:#FF5656; border:1px solid lightgray; padding:6px 14px;">글쓰기</a>
 				</div>
 
-				<nav aria-label="Page navigation" style="textalign:center;">
+				<nav aria-label="Page navigation" style="text-align:center;">
 					<ul class="pagination" >
 						<li><c:if test="${startNum-1>1}">
 								<a href="?p=${startNum-1}&t=&q=">Prev</a>
@@ -124,13 +141,14 @@
 
 						<c:forEach begin="0" end="4" var="i">
 							<c:if test="${(startNum+i) <= lastNum }">
-								<li><a style="color:${(page==(startNum+i))?'orange':''}"
+								<li><a style="color:${(page==(startNum+i))?'#FF5656':''}"
 									href="?p=${startNum+i}&f=${param.f }&q=${param.q}">${startNum+i}</a>
 								</li>
 							</c:if>
 						</c:forEach>
 
 						<li><c:if test="${startNum+4<lastNum}">
+							
 								<a href="?p=${startNum+5}&t=&q=">Next</a>
 							</c:if> <c:if test="${startNum+4>=lastNum}">
 								<span aria-hidden="true" onclick="alert('다음 페이지가 없습니다.');">Next</span>
@@ -138,20 +156,20 @@
 						</li>
 					</ul>
 				</nav>
-				<div>
-					<form>
-						<fieldset>
-							<label>검색분류</label> <select name="f">
+			<form>
+				<div style="text-align: center;  margin-top:34px;">
+					<div style="background-color: #fafafa; height:75px; padding:20px 0 20px 0;">
+							<label>검색분류</label> 
+							<select name="f" style="border:1px solid #e4e4e4;">
 								<option ${(param.f=="title")?"selected":"" } value="title">제목</option>
 								<option ${(param.f=="writer")?"selected":"" } value="writer">작성자</option>
-							</select> <label class="hidden">검색어</label> <input type="text" name="q"
-								value="${param.q }" /> <input class="btn btn-search"
-								type="submit" value="검색" />
-						</fieldset>
-					</form>
+							</select> 
+							<input type="text" name="q" value="${param.q }" style="border:1px solid #e4e4e4;" /> 
+							<input type="submit"  value="검색"  />
+					</div>
 				</div>
-			</main>
-		</div>
-	</div>
+			</form>
+			</div>
+		</main>
 </body>
 </html>

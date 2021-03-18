@@ -1,6 +1,6 @@
-package com.tarining.web.controller.admin.board;
+package com.tarining.web.controller.gallery;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,21 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+
 import com.taining.web.entity.BoardVo;
+import com.taining.web.entity.GalleryVo;
 import com.training.web.service.BoardService;
+import com.training.web.service.GalleryService;
 
 @MultipartConfig(
 		fileSizeThreshold = 1024*1024,
 		maxFileSize = 1024*1024*50,
 		maxRequestSize = 1024*1024*50*5
 		) //filesizethreshold 크기 이상의 용량이면 disk 사용하도록함
-@WebServlet("/admin/board/reg")
+@WebServlet("/gallery/reg")
 public class RegController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/view/admin/reg.jsp").forward(request,response);
+		request.getRequestDispatcher("/WEB-INF/view/gallery/galreg.jsp").forward(request,response);
 	}
 	
 	@Override
@@ -57,7 +60,7 @@ public class RegController extends HttpServlet {
 			InputStream fis= filePart.getInputStream();
 			
 			
-			String realPath=request.getServletContext().getRealPath("/upload"); //업로드의 절대경로알려줌
+			String realPath=request.getServletContext().getRealPath("/img"); //업로드의 절대경로알려줌
 			System.out.println(realPath);
 			
 			File path = new File(realPath); //실제 물리적인 경로가 존재한지 여부에 대해서 확인
@@ -86,16 +89,16 @@ public class RegController extends HttpServlet {
 			pub=true;
 		
 		
-		BoardVo vo = new BoardVo(); 
+		GalleryVo vo = new GalleryVo(); 
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setPub(pub);
 		vo.setWriter(writer);
-		vo.setFiles(builder.toString());
+		vo.setImg(builder.toString());
 		vo.setPassword(password);
 		
-		BoardService service = new BoardService();
-		int result = service.insertBoard(vo);
+		GalleryService service = new GalleryService();
+		int result = service.insertGallery(vo);
 		
 		response.sendRedirect("list");
 	}

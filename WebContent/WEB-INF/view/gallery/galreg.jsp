@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -7,8 +7,9 @@
 <html>
 
 <head>
-<title>IKA and ONIGIRI</title>
-    <meta charset="UTF-8">
+<title>이카 오니기리</title>
+<meta charset="UTF-8">
+<title>이카오니</title>
 </head>
 <script src="http://code.jquery.com/jquery.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -22,7 +23,7 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	
+<script type="text/javascript" src="/js/reg.js"></script>
 <style>
 ul{
 list-style:none;
@@ -44,12 +45,8 @@ padding:100px;
 margin:300px;
 }
 </style>
-<script type="text/javascript" src="/js/reg.js"></script>
 <body style="min-width: 1640px;">
-<c:if test="${login_id==null }">
-<c:redirect url="/login" context="/admin" />
-</c:if>
-	<header style="background-image:url(/img/이카오니기리배경.jpg); cursor: pointer; " onclick="location.href='list'">
+<header style="background-image:url(/img/이카오니기리배경.jpg); cursor: pointer; " onclick="location.href='list'">
 		<div style="text-align:center; height:200px; padding:60px 0 0 0;">
 		</div>
 	</header>
@@ -75,7 +72,7 @@ margin:300px;
 							<a href="/board/list">추억</a>
 						</p></li>
 					<li><p style="font-size: 20px; margin-top: 30px;">
-							<a href="/gallery/list">그림게시판</a>
+							<a href="list">그림게시판</a>
 						</p></li>
 					<c:if test="${login_id== null }">
 						<li>
@@ -100,7 +97,7 @@ margin:300px;
 		
 		<main style="float:left; padding:10px 10px 10px 0; margin:20px 0 0 0" >
 			<div style="padding:40px; margin:20px; border:1px solid #eee">
-			<form method="POST" action="reg" enctype="multipart/form-data" name="from">
+			<form method="POST" action="reg" enctype="multipart/form-data">
 				<div>
 					<table style="margin: 50px;">
 						<tbody>
@@ -125,16 +122,14 @@ margin:300px;
 								<th style="padding:5px 0 5px 0;">첨부파일</th>
 								<td colspan="3" style="padding:5px 0 5px 0;"><input type="file" name="file" /></td>
 							</tr>
-							<tr>
-								<th style="padding:5px 0 5px 0;">첨부파일</th>
-								<td colspan="3" style="padding:5px 0 5px 0;"><input type="file" name="file" /></td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div style="text-align: right; margin: 30px;">
-					<input type="submit" value="등록" style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
-					<input type="button" value="취소" onclick="location.href='list'" style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
+					<input type="submit" value="등록"
+						style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
+					<input type="button" value="취소" onclick="location.href='list'"
+						style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
 				</div>
 			</form>
 		</div>

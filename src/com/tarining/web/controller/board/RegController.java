@@ -1,6 +1,6 @@
-package com.tarining.web.controller.admin.board;
+package com.tarining.web.controller.board;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+
 import com.taining.web.entity.BoardVo;
 import com.training.web.service.BoardService;
 
@@ -23,13 +24,13 @@ import com.training.web.service.BoardService;
 		maxFileSize = 1024*1024*50,
 		maxRequestSize = 1024*1024*50*5
 		) //filesizethreshold 크기 이상의 용량이면 disk 사용하도록함
-@WebServlet("/admin/board/reg")
+@WebServlet("/board/reg")
 public class RegController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/view/admin/reg.jsp").forward(request,response);
+		request.getRequestDispatcher("/WEB-INF/view/reg.jsp").forward(request,response);
 	}
 	
 	@Override

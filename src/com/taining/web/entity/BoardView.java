@@ -8,8 +8,8 @@ public class BoardView extends BoardVo {
 		
 	}
 	public BoardView(int id, String title, String writer, String content, Date regdate, int hit, String files, boolean pub,
-			int cmtCount) {
-		super(id, title, writer, content, regdate, hit, files,pub);
+			String password, int cmtCount) {
+		super(id, title, writer, content, regdate, hit, files,password,pub);
 		this.cmtCount=cmtCount;
 	}
 	public int getCmtCount() {

@@ -42,7 +42,7 @@ public class ListController extends HttpServlet {
 			System.out.println(Arrays.asList(ids));
 			System.out.println(oids);
 			System.out.println(cids);
-			
+				
 			//transaction처리 (업무단위)
 			service.pubBoardAll(oids,cids);
 			
