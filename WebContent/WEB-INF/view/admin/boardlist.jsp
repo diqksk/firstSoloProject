@@ -90,6 +90,8 @@ a:visited{
 			<!-- --------------------------- main --------------------------------------- -->
 		<main style="float:left; padding:10px 10px 10px 0; margin:20px 0 0 0">
 			<div style="padding:40px; margin:20px; border:1px solid #eee">
+			<h2 style="margin:0">관리자 게시판...</h2>
+			<h5 style="margin-bottom:30px;">관리자만 출입 가능합니다..</h5>
 				<form action="list" method="POST">
 					<div>
 						<table class="table">

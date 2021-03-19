@@ -1,5 +1,6 @@
 package com.training.web.service;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +37,7 @@ public class GalleryService {
 				String img = rs.getString("IMG");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
+				regdate.setHours(regdate.getHours()-9);
 				int hit = rs.getInt("HIT");
 				boolean pub = rs.getBoolean("PUB");
 				String password = rs.getString("PASSWORD");
@@ -111,6 +113,7 @@ public class GalleryService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
+				regdate.setHours(regdate.getHours()-9);
 				int hit_ = rs.getInt("HIT");
 				String img = rs.getString("IMG");
 				boolean pub = rs.getBoolean("PUB");
@@ -144,4 +147,88 @@ public class GalleryService {
 		}
 		return addhit;
 	}
+	
+public boolean checkPassword(int id, String pwd) {
+		
+		String sql = "SELECT * FROM GALLERY WHERE ID=? ";
+		boolean result = false;
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("PASSWORD").equals(pwd)) {
+					result= true;
+				}
+			}else {
+				System.out.println("id가 없습니다.");
+				result= false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs, pstmt, conn);
+	}
+		return result;
+}
+
+public void deleteGallery(int id) {
+	
+	
+	String sql = "DELETE FROM GALLERY WHERE ID=? ";
+	deleteFile(id);
+	try {
+		
+		conn = JdbcUtil.getConnection();
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,id);
+		pstmt.executeUpdate();
+		if(pstmt.executeUpdate()<=0) {
+			System.out.println("삭제성공");
+		}else {
+			System.out.println("삭제실패");
+		}
+		conn.close();
+		pstmt.close();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+}
+public void deleteFile(int id) {
+	
+	String SQL = "SELECT IMG FROM GALLERY WHERE ID=?";
+	String URL = "F:\\solo_proj\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\solo_web\\img\\";
+		try {
+			conn = JdbcUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				String img=rs.getString("IMG");
+				if(img!=null) {
+					File file = new File(URL+img);
+					System.out.println(URL+img);
+					if(file.exists()) {
+						System.out.println("경로다음 파일삭제시작");
+						if(file.delete()) {
+							System.out.println("파일 삭제성공");
+						}else {
+							System.out.println("파일삭제 실패");
+						}
+					}
+				}else {
+					System.out.println("img파일을 찾을수 없습니다.");
+				}
+			}else {
+				System.out.println("이미지파일을 쿼리에서못찾음.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs, pstmt, conn);
+		}
+	}
+	
+
 }

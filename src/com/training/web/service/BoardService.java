@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.taining.web.entity.BoardView;
 import com.taining.web.entity.BoardVo;
@@ -185,6 +186,7 @@ public class BoardService {
 		String sql = "SELECT * FROM (SELECT @ROWNUM := @ROWNUM + 1 AS NUM, B.* FROM BOARD_VIEW B,(SELECT @ROWNUM:=0) TMP WHERE "
 				+ field + " LIKE ? ORDER BY REGDATE DESC) C WHERE NUM between ? AND ?;";
 		List<BoardView> list = new ArrayList<>();
+		
 		try {
 			conn = JdbcUtil.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -199,6 +201,9 @@ public class BoardService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
+				System.out.println("regdate 빼기전:"+ regdate);
+				regdate.setHours(regdate.getHours()-9);
+				System.out.println("regdate 뺸후:"+ regdate);
 				int hit = rs.getInt("HIT");
 				String files = rs.getString("files");
 				int cmtCount = rs.getInt("CMT_COUNT");
@@ -237,7 +242,7 @@ public class BoardService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
-				System.out.printf("id>>"+id+"  제목>>"+title+" 날짜>>>"+regdate+"\n");
+				regdate.setHours(regdate.getHours()-9);
 				int hit = rs.getInt("HIT");
 				String files = rs.getString("files");
 				int cmtCount = rs.getInt("CMT_COUNT");
@@ -321,6 +326,7 @@ public class BoardService {
 				String writer = rs.getString("WRITER");
 				String content = rs.getString("CONTENT");
 				Date regdate = rs.getTimestamp("REGDATE");
+				regdate.setHours(regdate.getHours()-9);
 				int hit_ = rs.getInt("HIT");
 				String files = rs.getString("files");
 				boolean pub = rs.getBoolean("PUB");

@@ -66,7 +66,7 @@ border:1px solid #e4e4e4;
 						</span>
 					</form>
 				</c:if>
-				<ul>
+				<ul >
 					<li><p style="font-size: 20px; margin-top: 30px;">
 							<a href="/board/list">추억</a>
 						</p></li>
@@ -97,7 +97,9 @@ border:1px solid #e4e4e4;
 	<main
 		style="float: left; padding: 10px 10px 10px 0; margin: 20px 0 0 0">
 		<div
-			style="padding: 40px; margin: 20px; border: 1px solid #eee; max-width: 1500px;">
+			style="padding: 40px; margin: 20px; border: 1px solid #eee; max-width: 1410px;">
+						<h2 style="margin:0">그림게시판...</h2>
+			<h5 style="margin-bottom:30px;">보여주고싶은 사진을 올리는 게시판..</h5>
 			<c:set var="page" value="${(empty param.p)?1:param.p}" />
 			<c:set var="startNum" value="${page-(page-1)%5}" />
 			<c:set var="lastNum"
@@ -112,19 +114,19 @@ border:1px solid #e4e4e4;
 				<div class="canvas"
 					style="padding: 40px; margin: 20px; border: 1px solid #eee; max-width: 400px; display: inline-block;">
 					<table>
-						<tr>
-							<td><img src="/img/${n.img }" width="100%" onclick="location.href='detail?id=${n.id }&p=${(empty param.p)?1:param.p}'"></td>
+						<tr style="max-height: 200px;">
+							<td ><img src="/img/${n.img }" style="max-height: 300px; min-height:150px;" width="100%" onclick="location.href='detail?id=${n.id }&p=${(empty param.p)?1:param.p}'"></td>
 						</tr>
 						<tr class="data">
 							<td style="font-size:20px; font-weight:bold; padding:15px 0 0 0 "><a
 								href="detail?id=${n.id }&p=${(empty param.p)?1:param.p}">${n.title }</a></td>
 						</tr>
-						<tr>
-							<td><span>${n.id }</span> <span
+						<tr style="border-bottom:1px solid #ddd;">
+							<td style=" padding-bottom:10px;"><span>${n.id }.</span> <span
 								style="font-weight: bold; font-size: 13px;">${n.writer }</span>
 								<span style="font-size: 13px;">조회 ${n.hit }</span> <span
 								style="font-size: 13px;"><fmt:formatDate
-										pattern="yyyy-MM-dd" value="${n.regdate }" /></span></td>
+										pattern="yyyy-MM-dd" value="${n.regdate }" /></span><span style="margin-left:100px;"><a href="delete?id=${n.id }">삭제</a></span></td>
 						</tr>
 					</table>
 				</div>

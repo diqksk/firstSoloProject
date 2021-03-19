@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.taining.web.entity.CommentVo;
@@ -31,7 +32,9 @@ public class CommentService {
 				vo.setId(rs.getInt("ID"));
 				vo.setCwriter(rs.getString("WRITER"));
 				vo.setCcontent(rs.getString("CONTENT"));
-				vo.setCregdate(rs.getTimestamp("REGDATE"));
+				Date regdate =  rs.getTimestamp("REGDATE");
+				regdate.setHours(regdate.getHours()-9);
+				vo.setCregdate(regdate);
 				vo.setBoardID(rs.getInt("BOARD_ID"));
 				Commentlist.add(vo);
 			}

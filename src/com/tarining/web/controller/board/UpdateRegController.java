@@ -37,7 +37,9 @@ public class UpdateRegController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
+		content=content.replace("\r\n", "<br>");
 		String writer = request.getParameter("writer");
+		int p = Integer.parseInt(request.getParameter("p"));
 		int id= Integer.parseInt(request.getParameter("id"));
 		BoardService service = new BoardService();
 		
@@ -49,6 +51,6 @@ public class UpdateRegController extends HttpServlet {
 		vo.setId(id);
 		
 		service.updateBoard(vo);
-		response.sendRedirect("detail?id="+id);
+		response.sendRedirect("detail?id="+id+"&p="+p);
 	}
 }

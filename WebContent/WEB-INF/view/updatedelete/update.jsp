@@ -19,6 +19,8 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<style>
 	ul{
 list-style:none;
@@ -86,19 +88,34 @@ a:visited{
 
 	<main style="float: left; padding: 10px 10px 10px 0; margin: 20px 0 0 0">
 		<div style="padding: 40px; margin: 20px; border: 1px solid #eee">
-			<form action="update" method="POST">
+			<form>
 				<table>
 					<tr>
 						<th>비밀번호 입력</th>
 						<td>
-						<input type="password" name="pwd"/>
+						<input type="password" id="pwd" name="pwd"/>
 						<input type="hidden" name="id" value="${id }"/>
 						</td>
-						<td><input type="submit" value="확인"/></td>
+						<td><input type="submit" value="확인" /></td>
 					</tr>
 				</table>
 			</form>
 		</div>
 	</main>
 </body>
+<script >
+$(function() {
+	$('form').submit(function() {
+		event.preventDefault();
+		if (this.pwd.value == "") {
+			alert("비밀번호를 입력해주세요");
+			this.pwd.focus();
+			return;
+		}
+		this.action = "update?p=${param.p}";
+		this.method = "POST";
+		this.submit();
+	});
+});
+</script>
 </html>

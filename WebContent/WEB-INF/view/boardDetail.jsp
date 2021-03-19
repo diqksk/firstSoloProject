@@ -159,8 +159,8 @@ padding:10px 10px;
 
 			<div>
 				<a class="btn btn-list" href="list">목록</a> <a class="btn btn-list"
-					href="update?id=${n.id }">수정</a> <a class="btn btn-list"
-					href="delete?id=${n.id }">삭제</a>
+					href="update?id=${n.id }&p=${p}">수정</a> <a class="btn btn-list"
+					href="delete?id=${n.id }&p=${p}">삭제</a>
 
 			</div>
 

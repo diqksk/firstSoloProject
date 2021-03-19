@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -8,7 +8,7 @@
 
 <head>
 <title>IKA and ONIGIRI</title>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 </head>
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
@@ -21,44 +21,54 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-		<style>
-	ul{
-list-style:none;
+<style>
+ul {
+	list-style: none;
 }
-.data:hover>td{
-	background:#eee;
-	cusor:pointer;
+
+textarea {
+	width: 870px;
+	min-height: 300px;
+	resize: none;
+	border: 1px solid #eee;
 }
-a:link{
-	color:black;
+
+input[type="text"], input[type="password"] {
+	width: 870px;
+	margin: 5px;
+	border: 1px solid #eee;
 }
-a:visited{
-	color:black;
+
+tr {
+	padding: 100px;
+	margin: 300px;
 }
-	</style>
+</style>
 <body style="min-width: 1640px;">
-	<header style="background-image: url(/img/이카오니기리배경.jpg); cursor: pointer;" onclick="location.href='list'">
+	<header
+		style="background-image: url(/img/이카오니기리배경.jpg); cursor: pointer;"
+		onclick="location.href='list'">
 		<div style="text-align: center; height: 200px; padding: 60px 0 0 0;">
 		</div>
 	</header>
 
 	<!-------------------------------------------aside----------------------------------------------->
-	<aside class="aside" style="float: left; padding: 10px 0 10px 10px; margin: 20px 0 0 0">
+	<aside class="aside"
+		style="float: left; padding: 10px 0 10px 10px; margin: 20px 0 0 0">
 		<div style="width: 200px">
-		<nav>
-				<br />
-				<br />
+			<nav>
+				<br /> <br />
 				<c:if test="${login_id!= null }  ">
 					<form action="/admin/login" method="POST">
-					<span style="margin-left:30px;">'${login_id }'님 안녕하세요.</span><br />
-					<span style="margin-left:30px;">관리자 계정입니다.</span>
-					<span style="margin-left:30px;">
-						<input type="hidden" name="access" value="logout" />
-						<input type="submit" value="log out" style="border:0"/>
-					</span>
+						<span style="margin-left: 30px;">'${login_id }'님 안녕하세요.</span><br />
+						<span style="margin-left: 30px;">관리자 계정입니다.</span> <span
+							style="margin-left: 30px;"> <input type="hidden"
+							name="access" value="logout" /> <input type="submit"
+							value="log out" style="border: 0" />
+						</span>
 					</form>
 				</c:if>
-					<ul>
+				<ul>
 					<li><p style="font-size: 20px; margin-top: 30px;">
 							<a href="/board/list">추억</a>
 						</p></li>
@@ -73,11 +83,11 @@ a:visited{
 						</li>
 					</c:if>
 					<c:if test="${login_id != null }">
-					<li>
-						<p style="font-size: 20px; margin-top: 30px;">
-							<a href="/admin/board/list">관리자 게시판</a>
-						</p>
-					</li>
+						<li>
+							<p style="font-size: 20px; margin-top: 30px;">
+								<a href="/admin/board/list">관리자 게시판</a>
+							</p>
+						</li>
 					</c:if>
 				</ul>
 			</nav>
@@ -86,41 +96,38 @@ a:visited{
 	<!-- --------------------------- main --------------------------------------- -->
 
 
-	<main style="float: left; padding: 10px 10px 10px 0; margin: 20px 0 0 0">
+	<main
+		style="float: left; padding: 10px 10px 10px 0; margin: 20px 0 0 0">
 		<div style="padding: 40px; margin: 20px; border: 1px solid #eee">
-                <form method="POST" action="updatereg" enctype="multipart/form-data">
-                    <div>
-                        <table style = "margin:50px;">
-                            <tbody>
-                                <tr>
-                                    <th>제목</th>
-                                    <td colspan="3">
-                                        <input type="text" name="title" value="${n.title }"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>작성자</th>
-                                    <td colspan="3">
-                                        <input type="text" name="writer" value="익명" />
-                                    </td>
-                                </tr>
-                                <tr class="content">
-                                <td></td>
-                                    <td colspan="3">
-                                    <textarea class="content" name="content">${n.content }</textarea>
-                                 	  <input type="hidden" name="id" value="${id }" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="margin-top text-align-center">
-                        <input class="btn-text btn-default" type="submit" value="등록" />
-                        <a class="btn-text btn-cancel" href="list">취소</a>
-                    </div>
-                </form>
-              </div>
-            </main>
+			<form method="POST" action="updatereg?p=${param.p }" enctype="multipart/form-data">
+				<div>
+					<table style="margin: 50px;">
+						<tbody>
+							<tr>
+								<th>제목</th>
+								<td colspan="3"><input type="text" name="title"
+									value="${n.title }" /></td>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td colspan="3"><input type="text" name="writer" value="익명" />
+								</td>
+							</tr>
+							<tr class="content">
+								<td></td>
+								<td colspan="3"><textarea class="content" name="content">${n.content }</textarea>
+									<input type="hidden" name="id" value="${id }" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div style="text-align: right; margin: 30px;">
+					<input type="submit" value="등록" style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
+					<input type="button" value="취소" onclick="location.href='list'" style="color: #fff; background-color: #ff5656; border: 0; padding: 6.7px;" />
+				</div>
+			</form>
+		</div>
+	</main>
 </body>
 
 </html>
