@@ -48,7 +48,7 @@ a:visited{
 		<nav>
 				<br />
 				<br />
-				<c:if test="${login_id!= null }">
+				<c:if test="${login_id!= null }  ">
 					<form action="/admin/login" method="POST">
 					<span style="margin-left:30px;">'${login_id }'님 안녕하세요.</span><br />
 					<span style="margin-left:30px;">관리자 계정입니다.</span>
