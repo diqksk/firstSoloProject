@@ -62,8 +62,7 @@ max-width: 70%;
 </style>
 <body style="min-width: 1640px;">
 	<header
-		style="background-image: url(/img/이카오니기리배경.jpg); cursor: pointer;"
-		onclick="location.href='list'">
+		style="background-image: url(/img/이카오니기리배경.jpg); cursor: pointer;" onclick="location.href='list'">
 		<div style="text-align: center; height: 200px; padding: 60px 0 0 0;">
 		</div>
 	</header>
